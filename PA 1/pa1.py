@@ -82,4 +82,51 @@ def pa1():
     #Find the means for Male Graduated, Male Not Graduated, Female Graduated and Female Not Graduated
     #and fill in the missing values accordingly.        
             
+    df_double_conditional = df.copy(deep = True)
+
+    mean_age_grad_yes_male = df_double_conditional['Age'][ (df_double_conditional['Graduated'] == 'Yes') & (df_double_conditional['Gender'] == 'Male') ].mean()
+    mean_age_grad_no_male = df_double_conditional['Age'][ (df_double_conditional['Graduated'] == 'No') & (df_double_conditional['Gender'] == 'Male') ].mean()
+    mean_age_grad_yes_female = df_double_conditional['Age'][ (df_double_conditional['Graduated'] == 'Yes') & (df_double_conditional['Gender'] == 'Female') ].mean()
+    mean_age_grad_no_female = df_double_conditional['Age'][ (df_double_conditional['Graduated'] == 'No') & (df_double_conditional['Gender'] == 'Female') ].mean()
+    
+    mean_gpa_grad_yes_male = df_double_conditional['GPA'][ (df_double_conditional['Graduated'] == 'Yes') & (df_double_conditional['Gender'] == 'Male') ].mean()
+    mean_gpa_grad_no_male = df_double_conditional['GPA'][ (df_double_conditional['Graduated'] == 'No') & (df_double_conditional['Gender'] == 'Male' )].mean()
+    mean_gpa_grad_yes_female = df_double_conditional['GPA'][ (df_double_conditional['Graduated'] == 'Yes') & (df_double_conditional['Gender'] == 'Female') ].mean()
+    mean_gpa_grad_no_female = df_double_conditional['GPA'][ (df_double_conditional['Graduated'] == 'No') & (df_double_conditional['Gender'] == 'Female') ].mean()
+
+    mean_daysmissed_grad_yes_male = df_double_conditional['Days_missed'][ (df_double_conditional['Graduated'] == 'Yes') & (df_double_conditional['Gender' ] == 'Male' ) ].mean()
+    mean_daysmissed_grad_no_male = df_double_conditional['Days_missed'][ (df_double_conditional['Graduated'] == 'No') & (df_double_conditional['Gender' ] == 'Male') ].mean()
+    mean_daysmissed_grad_yes_female = df_double_conditional['Days_missed'][ (df_double_conditional['Graduated'] == 'Yes') & (df_double_conditional['Gender'] == 'Female' )].mean()
+    mean_daysmissed_grad_no_female = df_double_conditional['Days_missed'][ (df_double_conditional['Graduated'] == 'No') & (df_double_conditional['Gender'] == 'Female') ].mean()
+
+    for index, row in df_double_conditional.iterrows():
+        if pd.isnull(row['Age']) and row['Graduated'] == 'Yes' and row['Gender'] == 'Male':
+            df_double_conditional.set_value(index,'Age', mean_age_grad_yes_male)        
+        if pd.isnull(row['Age']) and row['Graduated'] == 'No' and row['Gender'] == 'Male':
+            df_double_conditional.set_value(index,'Age', mean_age_grad_no_male)
+        if pd.isnull(row['Age']) and row['Graduated'] == 'Yes' and row['Gender'] == 'Female':
+            df_double_conditional.set_value(index,'Age', mean_age_grad_yes_female)            
+        if pd.isnull(row['Age']) and row['Graduated'] == 'No' and row['Gender'] == 'Female':
+            df_double_conditional.set_value(index,'Age', mean_age_grad_no_female)
+
+        if pd.isnull(row['GPA']) and row['Graduated'] == 'Yes' and row['Gender'] == 'Male':
+            df_double_conditional.set_value(index,'GPA', mean_gpa_grad_yes_male)
+        if pd.isnull(row['GPA']) and row['Graduated'] == 'No' and row['Gender'] == 'Male':
+            df_double_conditional.set_value(index,'GPA', mean_gpa_grad_no_male)
+        if pd.isnull(row['GPA']) and row['Graduated'] == 'Yes' and row['Gender'] == 'Female':
+            df_double_conditional.set_value(index,'GPA', mean_gpa_grad_yes_female)
+        if pd.isnull(row['GPA']) and row['Graduated'] == 'No' and row['Gender'] == 'Female':
+            df_double_conditional.set_value(index,'GPA', mean_gpa_grad_yes_female)
+
+        if pd.isnull(row['Days_missed']) and row['Graduated'] == 'Yes' and row['Gender'] == 'Male':
+            df_double_conditional.set_value(index,'Days_missed', mean_daysmissed_grad_yes_male)
+        if pd.isnull(row['Days_missed']) and row['Graduated'] == 'No' and row['Gender'] == 'Male':
+            df_double_conditional.set_value(index,'Days_missed', mean_daysmissed_grad_no_male)
+        if pd.isnull(row['Days_missed']) and row['Graduated'] == 'Yes' and row['Gender'] == 'Female':
+            df_double_conditional.set_value(index,'Days_missed', mean_daysmissed_grad_yes_female)
+        if pd.isnull(row['Days_missed']) and row['Graduated'] == 'No' and row['Gender'] == 'Female':
+            df_double_conditional.set_value(index,'Days_missed', mean_daysmissed_grad_yes_male)
+
+    df_double_conditional.to_csv('double_conditional.csv')
+                                                        
     return None
